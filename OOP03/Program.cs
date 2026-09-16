@@ -29,7 +29,87 @@ namespace OOP03
             // c) No. A sealed method cannot be overridden because the explicit purpose of the sealed modifier on
             // a method is to break the virtual inheritance chain and lock down the implementation so downstream
             // derived classes cannot modify it.
+
+
+
+           
+            Driver driver = new Driver(1, "Ahmed Hassan", "01012345678");
+
             
+            DeliveryCenter center = new DeliveryCenter("Cairo Main Center", 5, driver);
+
+            DeliveryAddress address = new DeliveryAddress("El Shorouk", "Cairo", 15);
+
+            
+            StandardShipment std = new StandardShipment("STD101", "Books", 2.0, 30, address);
+
+            
+            ExpressShipment exp = new ExpressShipment("EXP202", "Electronics", 1.5, 40, address, 25);
+
+            
+            InternationalShipment inter = new InternationalShipment("INT303", "Documents", 0.5, 100, address, "UAE", 50);
+
+           
+            center.AddShipment(std);
+            center.AddShipment(exp);
+            center.AddShipment(inter);
+
+           
+          
+            Console.WriteLine(" PrintAllShipments Output ");
+            center.PrintAllShipments();
+
+            
+            
+            Console.WriteLine(" DeliveryHelper Output ");
+           
+            DeliveryHelper.PrintShipmentDetails(std);
+           
+            DeliveryHelper.PrintShipmentDetails(exp);
+            
+            DeliveryHelper.PrintShipmentDetails(inter);
+
+            
+           
+            Console.WriteLine(" Overloading UpdateWeight ");
+            
+            std.UpdateWeight(3.5); 
+            Console.WriteLine($"Updated Weight (v1): {std.Weight} kg");
+
+            std.UpdateWeight(3.5, 0.5); 
+            Console.WriteLine($"Updated Weight (v2 with extra packing): {std.Weight} kg");
+
+            
+            Console.WriteLine("Mixed Shipment Array Loop ");
+           
+            Shipment[] mixedShipments = new Shipment[]
+            {
+                std,
+                exp,
+                inter,
+                new PriorityInternationalShipment("PRI404", "Medical Supplies", 5.0, 200, address, "USA", 150),
+                new CompletedShipment("COM505", "Clothing", 1.2, 20, address, DateTime.Now)
+            };
+
+            foreach (Shipment s in mixedShipments)
+            {
+                s.PrintShipmentDetails();
+              
+            }
+
+       
+            Console.WriteLine(" Sealed Class & Method Demo ");
+
+           
+            PriorityInternationalShipment priority = new PriorityInternationalShipment("PRI404", "Medical Supplies", 5.0, 200, address, "USA", 150);
+            priority.GenerateCustomsReport();
+
+            
+            CompletedShipment completed = new CompletedShipment("COM505", "Clothing", 1.2, 20, address, DateTime.Now);
+            completed.PrintShipmentDetails();
+
+        
         }
     }
 }
+
